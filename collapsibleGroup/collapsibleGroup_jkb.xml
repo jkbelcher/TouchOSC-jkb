@@ -40,6 +40,10 @@
 <key><![CDATA[locked]]></key>
 <value>0</value>
 </property>
+<property type='s'>
+<key><![CDATA[name]]></key>
+<value><![CDATA[group]]></value>
+</property>
 <property type='i'>
 <key><![CDATA[orientation]]></key>
 <value>0</value>
@@ -97,8 +101,8 @@
 <property type='r'>
 <key><![CDATA[frame]]></key>
 <value>
-<x>60</x>
-<y>60</y>
+<x>59.9999</x>
+<y>59.9999</y>
 <w>240</w>
 <h>240</h>
 </value>
@@ -137,13 +141,11 @@
 </property>
 <property type='s'>
 <key><![CDATA[script]]></key>
-<value><![CDATA[-- Collapsible Group Control by JKB
---
---  https://github.com/jkbelcher/TouchOSC-jkb/tree/main/collapsibleGroup
---  2023-01-11 initial version
+<value><![CDATA[-- Collapsible Group Control
+--  2023-01-11 initial version JKB
+--  2023-01-16 use top-level Orientation property JKB
 
 -- Adjust as needed
-local openDirection = "down" -- Direction of movement: down/up/left/right
 local controlCorner = 2      -- Control location. 1=upper left, 2=upper right
                              --                   4=lower left, 3=lower right
 local speed = 400            -- Pixels per second
@@ -191,7 +193,7 @@ function init()
   self.children.contents.frame.h = self.frame.h - 2*padding
   
   -- Save size to hidden control .h
-  if openDirection == "left" or openDirection == "right" then
+  if self.orientation == 1 or self.orientation == 3 then
     state.frame.h = self.frame.w
   else
     state.frame.h = self.frame.h
@@ -276,7 +278,7 @@ end
 
 function getSize()
   -- Returns current size.  Might be partial of full size if mid-change.
-  if openDirection == "left" or openDirection == "right" then
+  if self.orientation == 1 or self.orientation == 3 then
     return self.frame.w
   else
     return self.frame.h
@@ -284,20 +286,20 @@ function getSize()
 end
 
 function setSize(size)
-  if openDirection == "right" then
-    self.frame.w = size
-  elseif openDirection == "left" then
+  if self.orientation == 1 then
     self.frame.x = self.frame.x - (size - self.frame.w)
     self.frame.w = size  
-  elseif openDirection == "up" then
+  elseif self.orientation == 2 then
     self.frame.y = self.frame.y - (size - self.frame.h)
     self.frame.h = size
+  elseif self.orientation == 3 then
+    self.frame.w = size
   else
     -- Default to down
     self.frame.h = size
   end
 
-  if openDirection == "left" or openDirection == "right" then
+  if self.orientation == 1 or self.orientation == 3 then
     self.children.contents.frame.w = size - 2*padding
   else
     self.children.contents.frame.h = size - 2*padding
