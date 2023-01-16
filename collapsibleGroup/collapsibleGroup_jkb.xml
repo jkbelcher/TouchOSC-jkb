@@ -102,7 +102,7 @@
 <key><![CDATA[frame]]></key>
 <value>
 <x>59.9999</x>
-<y>59.9999</y>
+<y>60</y>
 <w>240</w>
 <h>240</h>
 </value>
@@ -142,8 +142,10 @@
 <property type='s'>
 <key><![CDATA[script]]></key>
 <value><![CDATA[-- Collapsible Group Control
---  2023-01-11 initial version JKB
---  2023-01-16 use top-level Orientation property JKB
+--  https://github.com/jkbelcher/TouchOSC-jkb/tree/main/collapsibleGroup
+--
+--  2023-01-11 initial version
+--  2023-01-16 use top-level Orientation property
 
 -- Adjust as needed
 local controlCorner = 2      -- Control location. 1=upper left, 2=upper right
